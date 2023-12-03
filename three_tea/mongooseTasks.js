@@ -1,13 +1,20 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/test');
+mongoose.connect('mongodb://127.0.0.1:27017/test1');
 
-const teaSchema = new mongoose.Schema( {name: String} );
-teaSchema.methods.brew = function() {
-    console.log(this.name + ' заварился');
-}
-const Tea = mongoose.model('Tea', teaSchema);
-const welding = new Tea({ name: 'Лист' });
+const Tea = require("./models/tea").Tea;
 
-welding.save()
-  .then(() => welding.brew())
-  .catch((err) => console.log(err));
+const tea = new Tea({
+  title: "Белый чай",
+  nick: "White_tea"
+});
+
+console.log(tea);
+
+tea.save()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  
