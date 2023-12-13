@@ -21,7 +21,7 @@ router.get('/:nick', async (req, res, next) => {
             title: tea.title,
             picture: tea.avatar,
             desc: tea.desc,
-            menu: teas || []
+            menu:teas
         });
     } catch (err) {
          next(err);
