@@ -7,7 +7,8 @@ var Tea = require("../models/tea").Tea
 router.get('/', async (req, res, next) => {
   try {
       const menu = await Tea.find({}, { _id: 0, title: 1, nick: 1 }).exec();
-      res.cookie('greeting', 'Hi!!!').render('index', { 
+      req.session.greeting = 'Hi!!!'
+      res.render('index', { 
         title: 'Express',
         menu: menu 
       });
