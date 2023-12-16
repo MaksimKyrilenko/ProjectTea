@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/threeteas')
 const session = require('express-session');
 const app = express();
+var Tea = require("./models/tea").Tea
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -38,6 +39,7 @@ app.use(function(req,res,next){
   next()
   })
     
+app.use(require("./middleware/createMenu.js"))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/teas', teas);
