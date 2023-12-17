@@ -1,32 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const Tea = require("../models/tea").Tea;
-var checkAuth = require("./../middleware/checkAuth.js")
-
-/* GET users listing. */
-router.get('/', (req, res) => {
-    res.send('Новый маршрутизатор, для маршрутов, начинающихся с teas');
+var express = require('express');
+var router = express.Router();
+var db = require('../mySQLConnect.js');
+router.get('/', function(req, res, next) {
+res.send('<h1>Это экран для списка чаев</h1>');
 });
-
-/* Страница чая */
-router.get('/:nick', checkAuth, async (req, res, next) => {
-    try {
-        const [tea, teas] = await Promise.all([
-            Tea.findOne({ nick: req.params.nick }).exec(),
-            Tea.find({}, { _id: 0, title: 1, nick: 1 }).exec()
-        ]);
-
-        if (!tea) throw new Error("Нет такого чая");
-
-        res.render('tea', {
-            title: tea.title,
-            picture: tea.avatar,
-            desc: tea.desc,
-            menu: teas || []
-        });
-    } catch (err) {
-         next(err);
-    }
+router.get("/:nick", function(req, res, next) {
+db.query(`SELECT * FROM teas WHERE teas.nick = '${req.params.nick}'`, (err, teas) => {
+if(err) {
+console.log(err);
+if(err) return next(err)
+} else {
+if(teas.length == 0) return next(new Error("Нет такого чая"))
+var tea = teas[0];
+res.render('tea', {
+title: tea.title,
+picture: tea.avatar,
+desc: tea.about
+})
+}
+})
 });
-
 module.exports = router;
