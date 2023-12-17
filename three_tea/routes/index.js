@@ -3,6 +3,7 @@ const router = express.Router();
 const Tea = require("../models/tea").Tea;
 var User = require("./../models/user").User
 
+
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {

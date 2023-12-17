@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Tea = require("../models/tea").Tea;
+var checkAuth = require("./../middleware/checkAuth.js")
 
 /* GET users listing. */
 router.get('/', (req, res) => {
@@ -8,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 /* Страница чая */
-router.get('/:nick', async (req, res, next) => {
+router.get('/:nick', checkAuth, async (req, res, next) => {
     try {
         const [tea, teas] = await Promise.all([
             Tea.findOne({ nick: req.params.nick }).exec(),
