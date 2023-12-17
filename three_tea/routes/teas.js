@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     res.send('Новый маршрутизатор, для маршрутов, начинающихся с teas');
 });
 
-/* Страница котят */
+/* Страница чая */
 router.get('/:nick', async (req, res, next) => {
     try {
         const [tea, teas] = await Promise.all([
